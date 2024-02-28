@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'pmd'
 }
 
 repositories {
@@ -12,6 +13,7 @@ dependencies {
     testImplementation platform("org.junit:junit-bom:5.9.3")
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.assertj:assertj-core:3.24.2"
+
 }
 
 test {
@@ -20,8 +22,16 @@ test {
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+
 }
 
 tasks.withType(Test) {
     systemProperty "file.encoding", "UTF-8"
+}
+pmd {
+    consoleOutput = true
+    toolVersion = "6.39.0"
+    rulesMinimumPriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+
 }
